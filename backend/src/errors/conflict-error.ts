@@ -1,4 +1,4 @@
-class ConflictError  extends Error {
+class ConflictError extends Error {
   public statusCode: number;
 
   constructor(message: string) {
@@ -6,4 +6,4 @@ class ConflictError  extends Error {
     this.statusCode = 409;
   }
 }
-export default ConflictError ;
+export default ConflictError;

@@ -1,4 +1,4 @@
-import { celebrate, Joi } from "celebrate";
+import { celebrate, Joi } from 'celebrate';
 
 export const validateProduct = celebrate({
   body: Joi.object().keys({
@@ -8,14 +8,14 @@ export const validateProduct = celebrate({
       originalName: Joi.string().required(),
     }).required(),
     category: Joi.string().required(),
-    description: Joi.string().allow("").optional(),
+    description: Joi.string().allow('').optional(),
     price: Joi.number().allow(null).optional(),
   }),
 });
 
 export const validateOrder = celebrate({
   body: Joi.object().keys({
-    payment: Joi.string().valid("card", "online").required(),
+    payment: Joi.string().valid('card', 'online').required(),
     email: Joi.string().email().required(),
     phone: Joi.string().required(),
     address: Joi.string().required(),
