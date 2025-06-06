@@ -5,7 +5,7 @@ import { validateProduct } from "../middlewares/validation";
 export const productRouter = Router();
 
 productRouter.get("/", getProducts);
-productRouter.post("/", createProduct);
+productRouter.post("/", validateProduct, createProduct);
 
 
 

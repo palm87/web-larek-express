@@ -4,6 +4,6 @@ import { validateOrder } from "../middlewares/validation";
 
 export const orderRouter = Router();
 
-// orderRouter.post("/", validateOrder, createOrder);
+orderRouter.post("/", validateOrder, createOrder);
 
-orderRouter.post("/", createOrder);
+

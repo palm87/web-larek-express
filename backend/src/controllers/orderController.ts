@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { faker } from "@faker-js/faker";
 import Product from "../models/productModel";
-import { BadRequestError } from "../errors/BadRequestError";
+import BadRequestError from "../errors/bad-request-error";
 
 export const createOrder = async (req: Request, res: Response, next: NextFunction) => {
     try {

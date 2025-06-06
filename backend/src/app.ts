@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import cors from "cors";
 import path from "path";
 import { errorHandler } from "./middlewares/errorHandler";
-import { NotFoundError } from "./errors/NotFoundError";
+import NotFoundError from "./errors/not-found-error";
 import { errors } from "celebrate";
 import { requestLogger, errorLogger } from './middlewares/logger';
 
@@ -21,15 +21,8 @@ app.use("/order", orderRouter);
 app.use(errorLogger);
 app.use(express.static(path.join(__dirname, "public")));
 mongoose.connect(DB_ADDRESS)
-   .then(() => console.log("✅ База данных подключена"))
-    .catch(err => console.error("❌ Ошибка подключения:", err));
-
-// app.use((req, res, next) => {
-//   next(new NotFoundError("Маршрут не найден"));
-// });
 app.use(errors());
 app.use(errorHandler);
-
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });

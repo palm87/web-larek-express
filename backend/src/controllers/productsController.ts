@@ -1,15 +1,16 @@
 
 import { Request, Response, NextFunction } from 'express';
 import Product from '../models/productModel'
-import { BadRequestError } from "../errors/BadRequestError";
-import { ConflictError } from "../errors/ConflictError";
-import { MongooseError } from 'mongoose';
+import BadRequestError  from "../errors/bad-request-error";
+import ConflictError from "../errors/conflict-error";
+import InternalServerError from "../errors/internal-server-error";
+import NotFoundError from 'errors/not-found-error';
+import { Error as MongooseError } from 'mongoose';
 
 export const getProducts = (_req: Request, res: Response, next: NextFunction) => Product.find({})
   .then((data) => res.send({ items: data, total: data.length }))
   .catch((error) => {
-    console.error("Ошибка при получении продуктов:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    next(new InternalServerError('Ошибка получения товаров'));
 
   });
 
@@ -27,9 +28,13 @@ export const getProducts = (_req: Request, res: Response, next: NextFunction) =>
         res.status(201);
         res.send({ item: product });
       })
-      .catch((err) => {
-        console.error('Ошибка создания продукта:', err);
-        const resultError = new MongooseError(err.message);
-        return next(resultError);
-      });
-  };
+      .catch((error) =>  {
+        if (error instanceof MongooseError.ValidationError) {
+          return next(new BadRequestError('Ошибка валидации данных при создании товара'));
+        }
+        if  (error instanceof Error && error.message.includes('E11000')) {
+          return next(new ConflictError('Товар с таким названием уже существует'));
+        }
+        return next(new InternalServerError('Ошибка сервера'));
+      }
+      )};

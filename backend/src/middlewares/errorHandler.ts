@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import { BadRequestError } from "../errors/BadRequestError";
-import { NotFoundError } from "../errors/NotFoundError";
-import { ConflictError } from "../errors/ConflictError";
-import { InternalServerError } from "../errors/InternalServerError";
+import BadRequestError from "../errors/bad-request-error";
+import NotFoundError  from "../errors/not-found-error";
+import ConflictError from "../errors/conflict-error";
+import InternalServerError from "../errors/internal-server-error";
 import { Error as MongooseError } from "mongoose";
 
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
